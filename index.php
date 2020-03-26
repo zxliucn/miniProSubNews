@@ -1,12 +1,11 @@
 <?php
 
 $code=$_GET['js_code'];
-  // $accessToken=getAccessToken();
+
 $oopenId=getOpenId($code);
 $accessToken=getAccessToken();
 
 $url="https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=".$accessToken;
-
 $query_data = [
             'access_token' =>getAccessToken(),
             'touser' => $oopenId['openid'],
@@ -21,7 +20,7 @@ $query_data = [
             ]
         ];
 
-$res=post($url,json_encode($query_data));
+  $res=httpPost($url,json_encode($query_data));
 
   jsonReturn("1",'aaa',array(
     'jscode'=>$code,
@@ -31,6 +30,8 @@ $res=post($url,json_encode($query_data));
   ));
   
 
+
+/***********************************************************/
   function jsonReturn($code = 200,$msg='',$data = null)
     {
         $Result['code'] = $code;
@@ -62,16 +63,15 @@ $res=post($url,json_encode($query_data));
 
   function getAccessToken(){
     $appid="wx8e5589d71d8f9e67";
-    $appsecret = "695257148950d1f85e52c45b8ebbdcd9";
+    $appsecret = "69525714************b8ebbdcd9";
     $url="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".$appid."&secret=".$appsecret;
     $res=json_decode(httpGet($url),true);  
     return $res['access_token']; 
   }
 
   function getOpenId($code){
-
     $appid="wx8e5589d71d8f9e67";
-    $appsecret = "695257148950d1f85e52c45b8ebbdcd9";
+    $appsecret = "695257148************8ebbdcd9";
     $url = 'https://api.weixin.qq.com/sns/jscode2session?appid='.$appid.'&secret='.$appsecret.'&js_code='.$code.'&grant_type=authorization_code';
     $res=json_decode(httpGet($url),true); 
     return $res;
@@ -80,7 +80,6 @@ $res=post($url,json_encode($query_data));
  
 
   //公共的curl方法
-
   function httpGet($url){
     $curl = curl_init();
     curl_setopt($curl,CURLOPT_URL,$url);
@@ -92,29 +91,18 @@ $res=post($url,json_encode($query_data));
     curl_close($curl);
     return $res;
   }
-  function post($url, $data) {
-   //初使化init方法
+  function httpPost($url, $data) {
    $ch = curl_init();
-   //指定URL
    curl_setopt($ch, CURLOPT_URL, $url);
-   //设定请求后返回结果
    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-   //声明使用POST方式来进行发送
    curl_setopt($ch, CURLOPT_POST, 1);
-   //发送什么数据呢
    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-   //忽略证书
    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-   //忽略header头信息
    curl_setopt($ch, CURLOPT_HEADER, 0);
-   //设置超时时间
    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-   //发送请求
    $output = curl_exec($ch);
-   //关闭curl
    curl_close($ch);
-   //返回数据
    return $output;
 }
 
