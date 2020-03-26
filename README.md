@@ -2,12 +2,14 @@
 小程序订阅接口PHP示例
 
 <h3>小程序有两个页面</h3>
+
   * index是订阅消息页面
   * home是发送订阅消息页面
   * index.php 是PHP示例代码
 
 
 <h3>关于小程序推送消息升级为订阅消息的相关文章：</h3>
+
   * 微信-小程序模板消息升级订阅消息调研文档: https://blog.zxliu.cn/archives/237/
   * 微信-小程序订阅消息模板实例代码   https://blog.zxliu.cn/archives/231/
   * 微信-小程序模板消息升级订阅消息难点记录 https://blog.zxliu.cn/archives/235/
